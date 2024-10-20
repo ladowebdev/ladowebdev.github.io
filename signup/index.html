@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .signup-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .signup-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .signup-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .signup-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .signup-container button:hover {
+            background-color: #45a049;
+        }
+        /* Message box for displaying messages */
+        #messageBox {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        
+        <button id="signup">Sign Up</button>
+        <p style="font-size: 12px;"> Already have an account? <a href="/login/" style="color:#357AE8;"> Login</a> </p>
+        <!-- Message Box -->
+        <div id="messageBox"></div>
+    </div>
+
+    <!-- Firebase App (Firebase v9 Modular SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
+
+    <script type="module">
+        // Import the functions from Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+        // Firebase configuration (Replace with your own Firebase project settings)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAZ8kM0AiksKgg_7OCUjuXxaf3n5i3_Ac",
+            authDomain: "lado-9994d.firebaseapp.com",
+            projectId: "lado-9994d",
+            storageBucket: "lado-9994d.appspot.com",
+            messagingSenderId: "194457991710",
+            appId: "1:194457991710:web:0c3a9239ea4a7eb3c4cc0f",
+            measurementId: "G-SERRE1MK4J",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Show message in the messageBox
+        function showMessage(message) {
+            const messageBox = document.getElementById("messageBox");
+            messageBox.style.display = "block";
+            messageBox.textContent = message;
+        }
+
+        // Function for signing up the user
+        function signUp() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Show success message
+                    showMessage("Sign-up successful!");
+                })
+                .catch((error) => {
+                    // Show error message
+                    showMessage("Error: " + error.message);
+                });
+        }
+        document.getElementById('signup').onclick = signUp;
+
+    </script>
+</body>
+</html>
